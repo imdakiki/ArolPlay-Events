@@ -299,4 +299,8 @@ async def health(ctx):
     except KeyError:
         await ctx.reply("🛑 ArolPlay Events health data not found.")
 
+@bot.command()
+async def test(ctx):
+    await ctx.reply("test")
+
 bot.run(os.environ("token"))
