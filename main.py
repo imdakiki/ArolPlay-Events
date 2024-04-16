@@ -70,7 +70,7 @@ async def on_command_error(ctx, error):
 @commands.is_owner()
 async def pull(ctx):
     await ctx.reply("Code pulled!\n> Note: I am now restarting... Wait 3 - 10 seconds before reusing me!")
-    subprocess.Popen(["git", "pull https://github.com/imdakiki/ArolPlay-Events.git"])
+    subprocess.Popen(["cmd", "git pull https://github.com/imdakiki/ArolPlay-Events.git"])
     await asyncio.sleep(1)
     restart_bot()
 
