@@ -8,7 +8,7 @@ from discord.ui import Button, View
 import time
 import datetime
 import aiohttp
-import dotenv
+import env
 import pytz
 import pymongo
 
