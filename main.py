@@ -4,6 +4,7 @@ import os
 import asyncio
 import subprocess
 import random
+import traceback
 from discord.ui import Button, View
 import time
 import sys
@@ -44,7 +45,7 @@ attack_responses = [
 ]
 
 # Connect to MongoDB
-mongo_client = pymongo.MongoClient(os.getenv("db"))
+mongo_client = pymongo.MongoClient(os.environ("db"))
 db = mongo_client["Bot2-Data"]
 collection = db["data"]
 
@@ -64,7 +65,7 @@ GIT_PULL_COMMAND = ['git', 'pull']
 
 @bot.event
 async def on_message(message):
-    if message.channel.id == os.getenv("gitchannel"):
+    if message.channel.id == os.environ("gitchannel"):
         # Check if the message content indicates a new commit or merged PR
         if 'Commit' in message.content.lower() or 'Merged' in message.content.lower():
             # Execute git pull command
@@ -298,4 +299,4 @@ async def health(ctx):
     except KeyError:
         await ctx.reply("🛑 ArolPlay Events health data not found.")
 
-bot.run(os.getenv("token"))
+bot.run(os.environ("token"))
