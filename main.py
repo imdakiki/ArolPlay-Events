@@ -58,6 +58,31 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Roblox"), status=discord.Status.idle)
     print("The bot is now online.")
 
+GITHUB_REPO_URL = 'https://github.com/imdakiki/ArolPlay-Events.git'
+
+GIT_PULL_COMMAND = ['git', 'pull']
+
+@bot.event
+async def on_message(message):
+    if message.channel.id == CHANNEL_ID:
+        # Check if the message content indicates a new commit or merged PR
+        if 'Commit' in message.content.lower() or 'Merged' in message.content.lower():
+            # Execute git pull command
+            await update_repository(message)
+
+async def update_repository(message):
+    try:
+        # Execute git pull command
+        result = subprocess.run(GIT_PULL_COMMAND, capture_output=True, text=True)
+        if result.returncode == 0:
+            await message.channel.send('Code pulled successfully!')
+            restart_bot()
+        else:
+            await message.channel.send('Error pulling repo!')
+            await message.channel.send(f'Error: {result.stderr}')
+    except Exception as e:
+        await message.channel.send(f'An error occurred: {str(e)}')
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
